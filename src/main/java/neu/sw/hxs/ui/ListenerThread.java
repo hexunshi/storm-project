@@ -21,7 +21,7 @@ public class ListenerThread extends Thread {
                 accept = serverSocket.accept();
                 System.out.println(accept.getInetAddress() + ":" + accept.getPort() + "连接成功");
                 StormThread stormThread = new StormThread(accept, mainFrame);
-                stormThread.run();
+                stormThread.start();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -26,7 +26,7 @@ public class LocalFileLogLevelCountTopology {
             hashMap.put(RegexBolt.INDEX, args[2]);
             hashMap.put(RegexBolt.FIELD, "log");
             builder.setBolt("regexBolt", new RegexBolt(), 1).addConfigurations(hashMap).shuffleGrouping("fileSpout");
-            builder.setBolt("countBolt", new CountBolt(), 4)
+            builder.setBolt("cou    ntBolt", new CountBolt(), 4)
                     .fieldsGrouping("regexBolt", new Fields("level"));
             HashMap<String, Object> stringObjectHashMap = new HashMap<>();
             stringObjectHashMap.put("ip", args[3]);
@@ -38,10 +38,10 @@ public class LocalFileLogLevelCountTopology {
             Config conf = new Config();
             conf.setDebug(true);
             if (args.length > 5) {
-                conf.setNumWorkers(3);
+                conf.setNumWorkers(1);
                 StormSubmitter.submitTopologyWithProgressBar(args[5], conf, builder.createTopology());
             } else {
-                conf.setMaxTaskParallelism(3);
+                conf.setMaxTaskParallelism(1);
 
                 LocalCluster cluster = new LocalCluster();
                 cluster.submitTopology("LocalFileLogLevelCountTopology", conf, builder.createTopology());

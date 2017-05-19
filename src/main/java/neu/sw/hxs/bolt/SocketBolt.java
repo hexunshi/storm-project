@@ -40,6 +40,7 @@ public class SocketBolt extends BaseRichBolt {
             try {
                 String result = "{" + input.getStringByField("level") + "," + input.getIntegerByField("count") + "}";
                 dataOutputStream.writeUTF(result);
+                dataOutputStream.flush();
                 collector.ack(input);
             } catch (IOException e) {
                 collector.fail(input);

@@ -15,8 +15,7 @@ public class MainFrame extends JFrame {
         setPreferredSize(new Dimension(600, 800));
     }
 
-    public void put(String key, Integer value) {
+    public synchronized void put(String key, Integer value) {
         drawPanel.set(key, value);
-        drawPanel.updateUI();
     }
 }
