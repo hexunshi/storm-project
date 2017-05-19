@@ -36,7 +36,7 @@ public class HdfsLogLevelCountTopology {
             builder.setSpout("hdfsSpout", hdfsSpout, 1);
             builder.setBolt("regexBolt", new RegexBolt(), 1)
                     .addConfigurations(hashMap).shuffleGrouping("hdfsSpout");
-            builder.setBolt("countBolt", new CountBolt(), 4)
+            builder.setBolt("countBolt", new CountBolt(), 1)
                     .fieldsGrouping("regexBolt", new Fields("level"));
             HashMap<String, Object> stringObjectHashMap = new HashMap<>();
             stringObjectHashMap.put("ip", args[6]);
@@ -49,13 +49,13 @@ public class HdfsLogLevelCountTopology {
             conf.setDebug(true);
 
             if (args.length > 8) {
-                conf.setNumWorkers(3);
+                conf.setNumWorkers(1);
                 StormSubmitter.submitTopologyWithProgressBar(args[8], conf, builder.createTopology());
             } else {
-                conf.setMaxTaskParallelism(3);
+                conf.setMaxTaskParallelism(1);
                 LocalCluster cluster = new LocalCluster();
                 cluster.submitTopology("hdfsLogLevelCountTopology", conf, builder.createTopology());
-                Thread.sleep(10000);
+                Thread.sleep(90000);
                 cluster.shutdown();
             }
         } else {

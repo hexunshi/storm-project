@@ -45,6 +45,7 @@ public class RegexBolt implements IRichBolt {
                 System.err.println("不符合规格丢弃" + log);
             }
         }
+        collector.ack(input);
     }
 
     public void cleanup() {

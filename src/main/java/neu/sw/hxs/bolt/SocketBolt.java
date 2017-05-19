@@ -21,22 +21,28 @@ public class SocketBolt extends BaseRichBolt {
     private DataOutputStream dataOutputStream;
     private String ip;
     private int port;
+    private OutputCollector collector;
 
     @Override
     public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         ip = (String) stormConf.get(IP);
         port = Integer.parseInt((String) stormConf.get(PORT));
+        this.collector = collector;
         tryConnect();
     }
 
     @Override
     public void execute(Tuple input) {
         if (dataOutputStream == null || socket == null || socket.isClosed()) {
+            collector.fail(input);
             tryConnect();
         } else {
             try {
-                dataOutputStream.writeUTF("{" + input.getStringByField("level") + "," + input.getIntegerByField("count") + "}");
+                String result = "{" + input.getStringByField("level") + "," + input.getIntegerByField("count") + "}";
+                dataOutputStream.writeUTF(result);
+                collector.ack(input);
             } catch (IOException e) {
+                collector.fail(input);
                 e.printStackTrace();
             }
         }
@@ -44,7 +50,6 @@ public class SocketBolt extends BaseRichBolt {
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
-
     }
 
     @Override
