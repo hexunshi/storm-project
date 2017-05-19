@@ -21,3 +21,20 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /storm-project.iml
+/target/
+.idea/inspectionProfiles/
+.idea/libraries/Maven__commons_io_commons_io_2_4.xml
+.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml
+.idea/libraries/Maven__org_apache_curator_curator_client_2_6_0.xml
+.idea/libraries/Maven__org_apache_curator_curator_framework_2_6_0.xml
+.idea/libraries/Maven__org_apache_storm_storm_kafka_client_1_1_0.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
+input/
+logs/
+src/main/resources/
+src/test/
+target/
